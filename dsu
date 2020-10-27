@@ -1,0 +1,20 @@
+// find_parent -> Returns representative of group 
+// unite -> merge two groups
+struct dsu {
+  vector<int> parent, sz;
+  dsu(int n) {
+    parent = vector<int>(n + 1);
+    sz = vector<int>(n + 1);
+
+    for (int i = 0; i <= n; i++)
+      parent[i] = i, sz[i] = 1;
+  }
+  int find_parent(int u) {
+    return (u == parent[u] ? u : find_parent(parent[u]));
+  }
+  void unite(int u, int v) {
+    int a = find_parent(u), b = find_parent(v);
+    if (sz[a] > sz[b]) parent[b] = a, sz[a] += sz[b];
+    else parent[a] = b, sz[b] += sz[a];
+  }
+};
